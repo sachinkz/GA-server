@@ -12,7 +12,7 @@ const authRoutes = require('./routes/authRoutes')
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ['https://ga-client-sachinkzs-projects.vercel.app/',"https://ga-client.vercel.app/"],
   methods:"GET,POST,PUT,PATCH,DELETE,OPTIONS",
 }))
 
