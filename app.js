@@ -11,17 +11,9 @@ const authRoutes = require('./routes/authRoutes')
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:3000', 'https://ga-grabarts.vercel.app'];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // Check if the origin is in the list of allowed origins
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: 'https://grabarts.online',
   methods:"GET,POST,PUT,PATCH,DELETE,OPTIONS",
 }))
 
