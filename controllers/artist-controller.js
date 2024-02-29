@@ -657,26 +657,27 @@ const updateOrder = async (req, res, next) => {
 const followSuggestions = async (req, res, next) => {
   const artistId = req.params.artistId
 
-  
   const query = {
     _id: { $ne: artistId },
-    followers: { $nin: artistId }
+    isAdmin: { $ne: true },
+    followers: { $nin: [artistId] }
   }
 
   let suggestions
-  
+
   try {
-
-    suggestions = await User.find(query)
-
+    suggestions = await User.aggregate([
+      { $match: query },
+      { $sample: { size: 6 } }
+    ])
   } catch (err) {
     return next(
-      new HttpError("something went wrong could not fetch suggestions"),
+      new HttpError("Something went wrong, could not fetch suggestions"),
       500
     )
   }
 
-  res.json({success:true,suggestions:suggestions})
+  res.json({ success: true, suggestions: suggestions })
 }
 
 
