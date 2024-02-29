@@ -13,7 +13,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: 'https://grabarts.online',
+  origin: 'https://www.grabarts.online',
   methods:"GET,POST,PUT,PATCH,DELETE,OPTIONS",
 }))
 
