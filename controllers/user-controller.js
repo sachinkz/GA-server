@@ -45,7 +45,6 @@ const getArtistProfile = async (req, res, next) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const orderWork = async (req, res, next) => {
-  console.log(req.body)
 
   const { imgUrl, paper, faces, style, suggestion, orderedBy, orderedTo } = req.body
 
@@ -72,7 +71,6 @@ const createCheckoutSession = async (req, res, next) => {
 
   const { orderId, fullName, email, mobile, pin, address } = req.body
 
-  console.log(orderId)
 
   const newAddress = new Address({
     fullName, email, mobile, pin, address
@@ -126,7 +124,6 @@ const createCheckoutSession = async (req, res, next) => {
     }
 
     order.amount=amount
-    console.log(amount)
 
     await order.save()
     
@@ -152,7 +149,6 @@ const createCheckoutSession = async (req, res, next) => {
     return next(new HttpError(err.message, 500))
   }
 
-  console.log(session)
   res.json({status:true,id:session.id})
 }
 

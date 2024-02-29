@@ -84,7 +84,7 @@ const postComment = async (req, res, next) => {
     const newNotification = new Notification({
       from: artistId,
       to: postToComment.userId,
-      message: `${artistData.name} commented on your post`,
+      message: `${artistName} commented on your post`,
       postId: postId,
       artistImg: artistData.imageUrl
     })
@@ -92,12 +92,11 @@ const postComment = async (req, res, next) => {
     await newNotification.save()
   }
   catch (err) {
-    console.log(err)
     return next(new HttpError("something went wrong, saving comment failed"))
   }
 
   const mailData = {
-    message: `${artistData.name} commented on your post`,
+    message: `${artistName} commented on your post`,
     mailId: `${artistData.email}`
   }
 
@@ -134,7 +133,6 @@ const postCommentReply = async (req, res, next) => {
     await session.commitTransaction()
   }
   catch (err) {
-    console.log(err)
     return next(new HttpError("something went wrong, saving comment failed"))
   }
 
@@ -222,7 +220,7 @@ const likePost = async (req, res, next) => {
     if (!post.likes.includes(userId)) {
       post.likes.push(userId)
       const mailData = {
-        message: `${likeTo.name} liked your post`,
+        message: `${likeFrom.name} liked your post`,
         mailId: `${likeTo.email}`
       }
 
@@ -406,7 +404,6 @@ const updateNotifications = async (req, res, next) => {
 const verifyEmail = async (req, res, next) => {
 
   const { otp, artistId } = req.body;
-  console.log(req.body)
 
   let validOtp
   try {
@@ -423,7 +420,6 @@ const verifyEmail = async (req, res, next) => {
   } catch (err) {
     return next(HttpError('something went wrong while finding artist data', 422))
   }
-  console.log(artist)
   if (!artist) {
     return next(HttpError('this artist account does not axists', 422))
   }
@@ -487,7 +483,6 @@ const createPost = async (req, res, next) => {
   }
 
   const fileExt = postUrl.split(".").pop()
-  console.log(fileExt)
 
   let isVideo = false
   if (fileExt === "mp4") {
@@ -529,9 +524,7 @@ const followArtist = async (req, res, next) => {
 
   try {
     toFollow = await User.findById(artistToFollow)
-    console.log(toFollow)
     alreadyFollowing = toFollow.followers.find(id => id.equals(loggedArtist))
-    console.log(alreadyFollowing)
     if (!alreadyFollowing) {
       toFollow.followers.push(loggedArtist)
       await toFollow.save()
@@ -575,7 +568,6 @@ const verifyArtist = async (req, res, next) => {
 
   const { pricing, artistAddress } = req.body
   const artistId = req.artistData.artistId
-  console.log(pricing)
 
   const createdPricing = new Pricing({
     artistId,
@@ -585,7 +577,6 @@ const verifyArtist = async (req, res, next) => {
     let updated = await Artist.findByIdAndUpdate(artistId, { isVerified: true })
     createdPricing.save();
 
-    console.log(updated)
 
   } catch {
     return next(new HttpError('something went wrong ', 500))
@@ -679,7 +670,6 @@ const followSuggestions = async (req, res, next) => {
     suggestions = await User.find(query)
 
   } catch (err) {
-    console.log(err)
     return next(
       new HttpError("something went wrong could not fetch suggestions"),
       500

@@ -13,6 +13,7 @@ const transporter = nodemailer.createTransport({
 
 async function sendMail({mailId,message}) {
 
+    console.log(mailId,message)
     transporter.sendMail({
         from: process.env.SMTP_USER,
         to: mailId,
