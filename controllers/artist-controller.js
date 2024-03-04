@@ -666,10 +666,7 @@ const followSuggestions = async (req, res, next) => {
   let suggestions
 
   try {
-    suggestions = await User.aggregate([
-      { $match: query },
-      { $sample: { size: 6 } }
-    ])
+    suggestions = await User.find(query).limit(6);
   } catch (err) {
     return next(
       new HttpError("Something went wrong, could not fetch suggestions"),

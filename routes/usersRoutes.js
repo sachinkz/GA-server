@@ -15,6 +15,6 @@ router.get("/pricing/:artistId", userController.getPricing)
 
 router.get("/all-orders/:userId", userController.getAllOrders)
 
-
+router.post("/detect-faces", userController.detectFaces)
 
 module.exports = router
