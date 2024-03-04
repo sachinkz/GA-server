@@ -12,8 +12,7 @@ const authRoutes = require('./routes/authRoutes')
 const app = express();
 
 app.use(cors({
-  // origin: 'https://www.grabarts.online',
-  origin:"http://localhost:3000",
+  origin: 'https://www.grabarts.online',
   methods:"GET,POST,PUT,PATCH,DELETE,OPTIONS",
 }))
 
