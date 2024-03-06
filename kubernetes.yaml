@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: grabarts-server
+spec:
+  selector:
+    app: grabarts-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000 # Change this to the port your Node.js app is running on
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grabarts-server
+spec:
+  replicas: 3 # Adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: grabarts-server
+  template:
+    metadata:
+      labels:
+        app: grabarts-server
+    spec:
+      containers:
+        - name: grabarts-server
+          image: sachinkz/grabarts-server:latest
+          ports:
+            - containerPort: 5000
