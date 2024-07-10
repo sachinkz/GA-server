@@ -200,7 +200,12 @@ const getAllOrders = async (req, res, next) => {
 
 const detectFaces = async (req, res, next) => {
 
-  const client = new vision.ImageAnnotatorClient({ keyFilename: keyfile });
+  const client = new vision.ImageAnnotatorClient({
+    credentials: {
+      client_email: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
+      private_key: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, '\n')
+    }
+  });
 
 
   try {
