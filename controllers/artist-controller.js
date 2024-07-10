@@ -29,7 +29,7 @@ const fetchFeeds = async (req, res, next) => {
     const query = {};
 
     if (cursor) {
-      query._id = { $lt: cursor }; // Assuming _id is the ObjectId of the feeds
+      query._id = { $lt: cursor };
     }
 
     const feeds = await Post.find(query)

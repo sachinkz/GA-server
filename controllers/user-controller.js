@@ -212,7 +212,7 @@ const detectFaces = async (req, res, next) => {
 
   } catch (err) {
     return next(
-      new HttpError("something went wrong could not detect faces"),
+      new HttpError(err),
       500
     )
   }
